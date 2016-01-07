@@ -11,10 +11,14 @@ struct Grid {
 	double *ey, *ceye, *ceyh;
 	double *ez, *ceze, *cezh;
 	float *ez_float;
-	int sizeX, sizeY, sizeZ;
+	int M, N, sizeZ;
 	int time, maxTime;
-	int type;
-	double cdtds;
+	int type, nCells;
+	double cdtds, dx, dt;
+	double src_f, lambda, N_lambda;
+	double DOMX, DOMY;				// Physical domain size in meters
+	double src_x, src_y;			// Physical location of source
+	int src_i, src_j, src_type;		// Array location of source and source type
 };
 
 typedef struct Grid Grid;

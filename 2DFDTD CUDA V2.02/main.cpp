@@ -40,20 +40,13 @@
 #include "global.h"
 #include "grid_2d.h"
 #include "cuda_functions.h"
-#include "source.h"
 #include "graphics.h"
-//#include <time.h>
-//#include <Windows.h>
-//#include "parameters.h"
 // CARTESIAN
 
 int main(int argc, char** argv)
 {
 	gridInit(g);							// Initialize the grid
-	ezIncInit(g);							// Initialize the sources
 	initializeGlobalDevicePointers();		// Initialize all global dev pointers to zero
-	runFdtdWithFieldDisplayVbo(argc, argv);
-	//runFdtdWithFieldDisplay(argc, argv);
-		
+	runFdtdWithFieldDisplayVbo(argc, argv);			
 }
 

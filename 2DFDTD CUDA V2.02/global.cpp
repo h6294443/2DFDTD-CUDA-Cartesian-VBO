@@ -21,16 +21,17 @@ int plotting_step;
 //  Vertex buffer stuff
 float4 *dptr;					// The vertex part of the vbo - generated only once
 uchar4 *cptr;					// The color part of the vbo - generated each time loop
-uint *iptr;						// Not sure what this is yet.
+//uint *iptr;						// Not sure what this is yet.
 
+const int TILE_SIZE = 32;			 // Tile size, relates closely to size of a block.  
 const double c = 299792458.0;
-double src_f = 11e3;                 // Frequency of the source (for a sine or cosine)
-double lambda = c / src_f;           // Wavelength of the source (for a sine or cosine)
-double dx = 1.0;
-double Sc = 1 / sqrt(2.0);
-double dt = Sc*dx / c;
-double N_lambda = lambda / dx;
-//double Sc = c*dt / dx;
+const double e0 = 8.85418782e-12;		// electric permittivity of free space
+const double er = 1;                    // Relative electric permittivity
+const double u0 = 4 * PI *1e-7;			// magnetic permeability of free space
+const double ur = 1.0;                  // relative magnetic permeability
+const double imp0 = sqrt(u0 / e0);		// impedance of free space
+const double mag_cond = 0.0;            // Magnetic conductivity
+const double el_cond = 0.0;             // Electric conductivity
 
 
 const unsigned int RestartIndex = 0xffffffff;		// Used for primitive restart (VBO)

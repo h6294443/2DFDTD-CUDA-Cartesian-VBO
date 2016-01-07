@@ -13,6 +13,7 @@
 
 #include "grid_2d.h"
 #include <GL/glew.h>
+#define PI 3.14159265359
 
 typedef struct {									// This structure contains vbo data
 	GLuint vbo;
@@ -25,6 +26,7 @@ typedef struct {									// This structure contains vbo data
 } mappedBuffer_t;
 
 //__constant__ unsigned int  dvrgb[256];	
+extern const int TILE_SIZE;					// Tile size, relates closely to size of a block.  
 
 // vbo variables
 extern mappedBuffer_t vertexVBO;
@@ -32,10 +34,8 @@ extern mappedBuffer_t colorVBO;
 extern const unsigned int RestartIndex;
 extern float4 *dptr;					// The vertex part of the vbo - generated only once
 extern uchar4 *cptr;					// The color part of the vbo - generated each time loop
-extern uint *iptr;						// Not sure what this is yet.
 
 extern Grid *g;
-extern unsigned int *image_data;		// the container for the normalized color field data
 extern double *dev_hx;					// Now the global device pointer for field Hx
 extern double *dev_chxh;				// Global device pointer for Chxh
 extern double *dev_chxe;				// Same
@@ -52,12 +52,16 @@ extern float *dev_hy_float;				// Copy of dev_hy but in single precision
 // Note for all the externs declared below:  they have no location in memory until defined somewhere else (or here).  
 // Extern <variable type> just declares the variable globally to the program, but it does not exist until
 // it has been defined.
-extern double Sc;
-extern double dt;						// differential time operator
-extern double dx;						// differential x-operator
-extern double lambda;					// Source wavelength
-extern double N_lambda;					// Number of points per wavelength
-extern double src_f;					// Source frequency
+extern const double e0;					// electric permittivity of free space
+extern const double er;                 // Relative electric permittivity
+extern const double u0;					// magnetic permeability of free space
+extern const double ur;                 // relative magnetic permeability
+extern const double imp0;				// impedance of free space
+extern const double mag_cond;           // Magnetic conductivity
+extern const double el_cond;            // Electric conductivity
+extern const double c;
+
+
 extern float dy;						// differential y-operator
 extern int nx;							// ?
 extern int ny;							//	?
@@ -69,8 +73,6 @@ extern float domain_max_x;				// ?
 extern float domain_max_y;				// ?
 extern float global_min_field;			// calculated by find_min_max_on_gpu
 extern float global_max_field;			// calculated by find_min_max_on_gpu
-extern unsigned int rgb[];				// used in createImageOnGpu() in graphics.cpp
-extern float* field_data;				// presumably the argument to createImageOnGpu() or something
 extern unsigned int* dvimage_data;
 extern float *dvminimum_field_value;			// Both of these are passed to the find-min-max-gpu functions
 extern float *dvmaximum_field_value;		    // to get proper min/max field values for color-scaling
@@ -79,8 +81,8 @@ extern int plotting_step;					// Used in IterationAndDisplay; every plotting_ste
 // be displayed via OpenGL
 
 
-extern GLuint pbo_destination;
-extern struct cudaGraphicsResource *cuda_pbo_destination_resource;
-extern GLuint cuda_result_texture;
+//extern GLuint pbo_destination;
+//extern struct cudaGraphicsResource *cuda_pbo_destination_resource;
+//xtern GLuint cuda_result_texture;
 extern int iGLUTWindowHandle;          // handle to the GLUT window
 #endif
