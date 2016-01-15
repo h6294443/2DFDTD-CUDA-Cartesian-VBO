@@ -33,3 +33,9 @@ __global__ void create_Grid_points_only_kernel(float4 *dDptr, float *dEz_float, 
 __global__ void find_min_and_max_on_gpu(int nblocks, float* field, float* minimum_field_value, float* maximum_field_value);
 __global__ void create_image_on_gpu_vbo_kernel(uchar4 *colorPos, float4 *pos, float* Ez, int M, float minval, float maxval, int time, int width, int height);
 
+
+// The following are prototypes of ABC-related functions.
+// Full functions are in abc_Mur2nd.cu
+void abcInit(Grid *g);
+void abc(Grid *g);
+__global__ void Mur_ABC_kernel(double *dEz, double *dEzLeft, double *dEzRight, double *dEzBottom, double *dEzTop, double coef0, double coef1, double coef2, int M, int N);

@@ -62,8 +62,8 @@ void mouse(int button, int state, int x, int y) {
 
 void motion(int x, int y) {
 	float dx, dy;
-	dx = x - mouse_old_x;
-	dy = y - mouse_old_y;
+	dx = (float)(x - mouse_old_x);
+	dy = (float)(y - mouse_old_y);
 
 	if (mouse_buttons & 1) {
 		rotate_x += dy * 0.2f;
@@ -193,11 +193,12 @@ bool runFdtdWithFieldDisplayVbo(int argc, char** argv)	// This is the primary fu
 	}
 	glutMainLoop();									// This starts the glutMainLoop 
 	CleanupVbo(EXIT_FAILURE);
+	return 1;
 }
 
 void runIterationsAndDisplayVbo()						// This is the glut display function.  It is called once each
 {													// glutMainLoop() iteration.
-	if (g->time < maxTime)
+	if (g->time < g->maxTime)
 		update_all_fields_CUDA();	// was fdtdIternationsOnGpu()
 	else
 	{

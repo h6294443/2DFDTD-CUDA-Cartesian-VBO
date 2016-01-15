@@ -46,6 +46,7 @@
 int main(int argc, char** argv)
 {
 	gridInit(g);							// Initialize the grid
+	abcInit(g);
 	initializeGlobalDevicePointers();		// Initialize all global dev pointers to zero
 	runFdtdWithFieldDisplayVbo(argc, argv);			
 }

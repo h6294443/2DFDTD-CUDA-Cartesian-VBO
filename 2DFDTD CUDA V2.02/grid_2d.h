@@ -10,6 +10,7 @@ struct Grid {
 	double *ex, *cexe, *cexh;
 	double *ey, *ceye, *ceyh;
 	double *ez, *ceze, *cezh;
+	double *ezright, *ezleft, *eztop, *ezbottom;
 	float *ez_float;
 	int M, N, sizeZ;
 	int time, maxTime;

@@ -43,15 +43,15 @@ void gridInit(Grid *g) {
 	g->dt = g->cdtds*g->dx / c;
 
 	// Step 8: Calculate M and N
-	g->M = g->DOMX / g->dx;
-	g->N = g->DOMY / g->dx;
+	g->M = (int)(g->DOMX / g->dx);
+	g->N = (int)(g->DOMY / g->dx);
 	g->nCells = g->M*g->N;
 
 	// Step 8: Specify source position (and soon, type)
 	//const int src_pos_x = (int)(0.15*M);
 	//const int src_pos_y = (int)(0.5*N);
-	g->src_x = 0.7 * g->DOMX;
-	g->src_y = 0.50 * g->DOMY;
+	g->src_x = 0.75 * g->DOMX;
+	g->src_y = 0.75 * g->DOMY;
 	g->src_i = (int)(g->src_x / g->dx);	// source position in the Ez array
 	g->src_j = (int)(g->src_y / g->dx);
 
@@ -74,6 +74,13 @@ void gridInit(Grid *g) {
 	g->ceze = new double[g->M * g->N];
 	g->cezh = new double[g->M * g->N];
 	g->ez_float = new float[g->M * g->N];
+
+	// The following four arrays are for storing domain boundary
+	// values for the ABC (2nd Order Mur)
+	g->ezright = new double[g->N * 6];
+	g->ezleft = new double[(g->N * 6)];
+	g->eztop = new double[(g->M * 6)];
+	g->ezbottom = new double[(g->M * 6)];
 
 	printf("\n\nSimulation parameters\n");
 	printf("Domain size: %g m by %g m and %i by %i cells (M by N)\n", g->DOMX, g->DOMY, g->M, g->N);
@@ -122,7 +129,7 @@ void gridInit(Grid *g) {
 	double xc = g->DOMX / 2;
 	double yc = g->DOMY / 2;
 	double r1 = 0.175 * g->DOMX;
-	double r2 = 0.49 * g->DOMX;
+	double r2 = 0.9 * g->DOMX;
 
 	// Set up circular PEC 
 	for (m = 0; m < g->N; m++) {
@@ -133,7 +140,7 @@ void gridInit(Grid *g) {
 			double dx = x_current - xc;
 			double dy = y_current - yc;
 			double check = sqrt(dx*dx + dy*dy);
-			if (check < r1 || check > r2){
+			if (check < r1 ) {//|| check > r2){
 				g->ceze[offset] = 0.0;
 				g->cezh[offset] = 0.0;
 			}
